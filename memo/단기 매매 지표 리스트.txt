@@ -1,0 +1,300 @@
+각 지표에 대한 설명
+	모멘텀 지표 (Momentum Indicator)
+		Awesome Oscillator
+			단기, 장기 SMA를 비교하여 시장의 모멘텀을 측정.
+			추세기반
+			AO가 0을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+				GC : awesome_oscillator_indicator, 샹향 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+		KAMA (Kaufman’s Adaptive Moving Average)
+			변동성과 가격 트렌드를 결합하여 계산. 노이즈를 필터링 하고, 주가의 실제 트렌드를 더 정확하게 반영
+			GC : kama_close_kama_diff, KAMA와 주가의 차이
+			KAMA가 상승하면 상승 추세, 하락하면 하락 추세
+			주가가 KAMA를 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+				GC : kama_indicator, 샹향 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+		PPO (Percentage Price Oscillator)
+			주가의 변동을 분석하는데 사용하는 지표. MACD와 유사, 백분율로 표시되에 더 쉽게 해석 가능.
+			SIGNAL은 PPO의 이동평균선. 
+			GC : ppo_hist(제공됨), ppo와 ppo_signal의 차이로 매수/매도 신호를 해석
+			PPO가 0을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+			PPO가 신호선을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+				GC : ppo_indicator, 상승 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+		PVO (Percentage Volume Oscillator)
+			장기와 단기 거래량의 이동평균의 차이를 계산하여 현재 거래량의 강도와 추세를 파악.
+			주가의 상승/하락 추세에서 PVO는 해당 추세의 신뢰성이 될 수 있음.
+			SIGNAL은 PVO의 이동평균선. 
+			GC : pvo_hist(제공됨), pvo와 pvo_signal의 차이로 거래량의 변화 추세를 알 수 있음
+			PVO가 신호선을 상향 돌파하면 거래량 상승 추세로 전환, 하향 돌파하면 거래량 하향 추세로 전환
+				GC : pvo_indicator, 상승 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+			※ 이 지표는 사용시 고려를 더 해봐야 할듯
+		ROC (Rate of Change)
+			현재 가격과 n일전 가격을 비교하여 변동률을 계산. 
+			양수면 상승, 음수면 하락을 예측할 수 있음.
+			n을 조정해서 단기, 장기 추세를 볼 수 있음.
+		RSI (Relative Strength Index)
+			가격의 상승/하락에 대한 상대적인 강도. 추세시장보다 횡보시장에서 신뢰도가 높음.
+			70 이상 : 과매수, 30 이하 : 과매도 (더 강하게, 80/20을 잡기도 함)
+			RSI가 30을 상향 돌파 : 상승 추세로 역전, 70을 하향 돌파 : 하락 추세로 역전
+		Stochastic RSI Oscillator
+			일정 기간동안의 RSI의 최고/최저 값을 기준으로 현재 RSI의 값이 어느 정도 위치에 있는지 측정.
+			기본적으로 RSI를 사용하기에, 횡보시장에서 신뢰도가 높음
+			stochrsi : %K, 지난 n일 대비 현재 RSI의 값이 어느 정도 위치에 있는지 측정
+			stochrsi_k : %D1, 위의 값의 m일 이동평균
+			stochrsi_d : %D2, stochrsi_k의 이동평균
+			두 값이, 80 초과 : 과매수 상태, 20 미만 : 과매도 상태라고 해석할 수 잇음.
+			%K가 %D의 위로 교차 : 매수, 아래로 교차 : 매도 신호
+			GC : stochrsi_k_d_diff1, %K와 %D1의 차이
+			GC : stochrsi_indicator1, %K와 %D1의 교차점, 위로 올라서면 1, 내려가면 -1, 그 외엔 0.
+			GC : stochrsi_k_d_diff2, %K와 %D2의 차이
+			GC : stochrsi_indicator2, %K와 %D2의 교차점, 위로 올라서면 1, 내려가면 -1, 그 외엔 0.
+		Stochastic Oscillator
+			stoch : %K, 지난 n일 동안 가격변동에서 현재 가격이 어느 위치에 있는지 나타냄
+			stoch_signal : %D, stoch의 이동평균. 더 안정적인 지표로 사용
+			두 값의 차이 : 클수록 주식의 변동성이 크다는 것을 의미
+			두 값이, 80 초과 : 과매수 상태, 20 미만 : 과매도 상태 라고 해석할 수 있음.
+			GC : stoch_k_d_diff, %K와 %D의 차이
+			%K가 %D를 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+				GC : stoch_indicator, 상승 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+		TSI (True Strength Index)
+			가격 변동성을 측정하여 강도를 평가. 추세와 동력(Momentum)을 동시에 파악할 수 있음
+			0 이상이면 상승 추세, 이하이면 하락 추세
+			TSI가 0을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+			GC : tsi_signal, TSI의 EMA
+			GC : tsi_tsi_signal_diff, TSI와 신호선의 차이
+			TSI가 신호선(이동평균)을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하향 추세로 전환
+				GC : tsi_indicator, 상승 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+		Ultimate Oscillator
+			단기, 중기, 장기 추세를 모두 반영하여 시장의 과매수/과매도 상태를 판단.
+			UO가 70 이상 : 과매수, 30 이하 : 과매도
+			UO가 50을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하락 추세로 전환
+				GC : ultimate_oscillator_indicator, 상승 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+		Williams %R
+			현재 가격이 어느 정도 위치에 있는지 나타냄. 
+			-100 ~ 0의 값을 가짐. 
+			-20 이상 : 과매수, -80 이하 : 과매도
+			%R이 -50을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하락 추세로 전환
+				GC : williams_r_indicator, 상승 추세 전환시 1, 하향 추세 전환시 -1, 그 외엔 0
+	거래량 지표 (Volumn Indicator)
+		ADI (Accumulation/Distribution Index)
+			주식의 거래량과 가격 변동을 결합하여 매수/매도 압력을 측정. 주식이 축적(Accumulation)/분배(Distribution)되고 있는지 파악할 수 있음.
+			주가가 상승하지만 ADI가 하락하면 상승의 강도가 약해짐, 반대는 하락의 강도가 약해짐으로 해석 가능.
+			GC : adi_signal, ADI의 EMA
+			GC : adi_adi_signal_diff, ADI와 신호선의 차이
+			상승할 때 매수 압력 증가(상승 추세 시작/전환), 하락할 때 매도 압력 증가(하락 추세 시작/전환)
+				GC : adi_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		CMF (Chaikin Money Flow)
+			거래량과 가격 변동을 기반으로, 주식 구매 흐름을 나타냄.
+			양수면 매수 압력이 강함, 낮으면 매도 압력이 강함.
+			CMF가 0을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하락 추세로 전환
+				GC : cmf_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		EoM, EMV (Ease of movement)
+			주가의 변동성과 거래량을 고려하여 거래량 대비 주가가 얼마나 쉽게 움직이는지 나타냄. 상승/하락의 압력을 평가
+			값이 높으면 변동성이 크고, 낮으면 변동성이 작다고 해석할 수 있음. 
+			이것의 이동평균 값으로, 변동성을 장기적인 추세로도 볼 수 있음.
+			GC : eom_sma(제공됨), EoM의 SMA
+			EoM의 SMA가 0을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하락 추세로 전환
+				GC : eom_sma_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+			기울기를 이용해 상승/하락의 강도를 추가 해석 가능
+		FI (Force Index)
+			주가의 변동성과 거래량을 고려하여 매수와 매도 압력을 측정.
+			양수면 매수 압력이 강함(상승), 음수면 매도 압력이 강함(하락) 한다고 해석할 수 있음.
+			GC : fi_signal, FI의 이동평균
+			GC : fi_fi_signal_diff, FI와 이동평균의 차이
+			FI가 이동평균을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하락 추세로 전환
+				GC : fi_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		MFI (Money Flow Index)
+			주가와 거래량을 결합하여 매수/매도 압력을 측정.
+			RSI와 유사하지만, 거래량이 포함된다는 점에서 다름.
+			80 이상 : 과매수, 20 이하 : 과매도 
+			주가와 MFI가 서로 다른 방향으로 움직일 때, 주가의 반전 신호로 해석될 수 있음.
+			MFI가 20을 상향 돌파 : 상승 추세 시작, 80을 하향 돌파 : 하락 추세 시작
+				GC : mfi_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		NVI (Negative Volume Index)
+			거래량이 전날보다 낮을 때 발생하는 주가의 변동을 추적. 전날보다 높은 경우 변하지 않음.
+			기관이나 전문 트레이더와 같이 정보와 자금력이 풍부한 세력들이 거래량이 적은날에 조용히 움직이는 경향이 있다고 가정.
+			일반적으로 255일 이동평균을 신호선으로 사용
+			GC : nvi_signal_short, NVI의 단기 EMA
+			GC : nvi_signal_long, NVI의 장기 SMA
+			NVI가 상승 : 세력들의 매수, 하락 : 세력들의 매도로 해석 가능.
+				GC : nvi_indicator, 세력들의 매수 시 1, 매도 시 -1, 그 외엔 0
+		OBV (On-Balance Volume)
+			주가와 거래량을 결합하여 매수/매도 압력을 측정.
+			GC : obv_signal, OBV의 이동평균
+			GC : obv_obv_signal_diff, OBV와 이동평균의 차이, 교차점에 사용
+			값이 상승 : 매수 압력이 증가(상승), 하락 : 매도 압력이 증가(하락) 한다고 해석할 수 있음. 
+		VPT (Volume-price trend)
+			주가 상승/하락에 대해서 거래량이 얼마나 지지하는지를 나타냄.
+			GC : vpt_signal, VPT의 이동평균
+			GC : vpt_vpt_signal_diff, VPT와 이동평균의 차이, 교차점에 사용
+			VPT가 상승 : 상승 추세로 전환, 하락 : 하락 추세로 전환 (거래량의 지지를 받음)
+				GC : vpt_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		VWAP (Volume Weighted Average Price)
+			거래량 기반 가중 평균 가격을 나타내는 지표. 주식의 평균 거래 가격을 이해하고 분석하는 데 유용.
+			주가가 VWAP보다 높으면 주식이 평균 거래 가격보다 높게 거래되고 있음을 의미. 반대는 평균 거래 가격보다 낮게 거래되고 있음을 의미.
+			과매수/과매도로 유추할 수 있음
+			GC : vwap_close_vwap_diff, 주가와 VWAP의 차이
+			주가가 VWAP를 상향 돌파 : 상승 추세로 전환, 하향 돌파  : 하락 추세로 전환
+				GC : vwap_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+	변동성 지표 (Volatility Indicator)
+		ATR (Average True Range)
+			가격 변동성을 나타냄. 특정 기간 동안 가격 변동 폭의 평균을 계산
+			비율이 아니라 실제 가격을 나타냄 3이면 3달러 정도의 변동폭을 지닌다고 생각하면 됨
+		Bollinger Bands
+			주식의 변동성을 시각적으로 나타내는 기술적 지표. 과매수/과매도 상태를 파악하는 데 도움을 줌.
+			중심선, 상단, 하단 밴드가 있음.
+			주가가 상단 밴드에 근접 : 과매수, 하단 밴드에 근접 : 과매도
+			밴드의 폭이 넓으면 변동성이 크고, 좁으면 변동성이 낮음
+			bollinger_pband는 주가가 밴드의 어느 위치에 있는지 백분율로 나타낸 것.
+			bollinger_wband는 밴드의 폭.
+			GC : bollinger_hband_indicator(제공됨), bollinger_lband_indicator(제공됨), 주가가 상/하단 밴드를 넘어서는 경우.
+			주가가 밴드의 중심선을 상향 돌파 : 상승 추세 전환, 하향 돌파 : 하락 추세 전환
+				GC : bollinger_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		Donchian Channel
+			중심선, 상단, 하단 밴드가 있음.
+			상단, 하단은 특정 기간 동안 주식의 최고, 최저가. 중심은 그것의 평균.
+			DC의 상단 밴드 돌파 : 상승 추세 시작, 하단 밴드 돌파 : 하락 추세 시작
+			GC : donchian_channel_hband_indicator, donchian_channel_lband_indicator, 주가가 최고/최저가를 갱신한 경우
+			주가가 밴드의 중심선을 상향 돌파 : 상승 추세 전환, 하향 돌파 : 하락 추세 전환
+				GC : donchian_channel_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		Keltner Channel
+			볼린저 밴드와 유사. 중심선으로 EMA를 사용. 밴드의 폭을 ATR로 계산
+			주식이 상단 밴드에 근접하면 과매수 상태, 하단 밴드에 근접하면 과매도 상태로 해석할 수 있음.
+			밴드의 폭이 넓으면 변동성이 크고, 좁으면 변동성이 낮다고 해석할 수 있음.
+			GC : keltner_channel_hband_indicator(제공됨), keltner_channel_lband_indicator(제공됨), 주가가 상/하단 밴드를 넘어서는 경우.
+			주가가 밴드의 중심선을 상향 돌파 : 상승 추세 전환, 하향 돌파 : 하락 추세 전환
+				GC : keltner_channel_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		Ulcer Index
+			가격 하락 위험을 측정. 변동성과 리스크를 평가하는 데 유용. 투자자의 "마음의 고통"을 측정한다고도 할 수 있음.
+			값이 낮음 : 주가가 상대적으로 안정적이며 하락 리스크가 낮음, 높음 : 주가의 변동성이 크며 하락 리스크가 높음
+	추세 지표 (Trend Indicator)
+		이동평균선 (MA, Moving Average)
+			단순(SMA), 가중(WMA), 지수(EMA) 이동평균이 있음. 뒤로 갈수록 최근 주가에 더 큰 비중을 둠.
+			일반적으로 5, 10, 20, 50, 60, 120, 200 정도를 사용하는 것 같다.
+		ADX (Average Directional Index)
+			ADX는 상승, 하락의 강도를 의미.
+			DI+(pos), DI-(neg)는 각각 상승, 하락의 강도고, DI+가 DI-보다 높으면 상승의 추세를 의미
+			GC : adx_pos_neg_diff, pos와 neg의 차이로 컬럼을 묶을 수 있음.
+			DI+가 DI-를 상향 돌파 : 상승 추세로 전환, 하향 돌파 : 하락 추세로 전환
+				GC : adx_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		Aroon Indicator
+			특정 주기가 지난 후 주가의 최고/최저가를 기준으로 추세를 측정. 추세 전환 시점을 식별하는 데 유용.
+			Up, Down : 특정 기간동안의 최고/최저가 이후 경과한 일수를 기반으로 계산됨.
+			Up이 70 이상 : 최근에 최고가가 기록됐으며 상승 추세, Down이 70 이상 : 최근에 최저가가 기록됐으며 하락 추세.
+			두 값이 50 미만 : 주가가 횡보하는 상태일 가능성이 높음.
+			Up이 Down을 상향 돌파하면 상승 추세로 전환, 하향 돌파하면 하락 추세로 전환
+				GC : aroon_indicator(제공됨). 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		CCI (Commodity Channel Index)
+			특정 기간 동안 가격의 평균과 실제 가격 간의 차이를 측정하여 과매수/과매도 상태를 평가.
+			100 이상 : 과매수, -100 이하 : 과매도, -100 ~ 100 : 중립으로 해석할 수 있음. 
+			CCI가 -100을 상향 돌파 : 상승 추세로 전환, 100을 하향 돌파 : 하락 추세로 전환
+				GC : cci_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+		DPO (Detrended Price Oscillator)
+			추세를 제거하여 가격 주기를 파악하는 지표. 따라서, 횡보장에서 유의미
+			DPO가 양수 : 단기적인 상승 추세, 음수 : 단기적인 하락 추세
+			값이 0을 상향 돌파 : 상승 추세의 시작, 하향 돌파 : 하락 추세의 시작
+				GC : dpo_indicator, 상승 추세 시작시 1, 하락 추세 시작시 -1
+		일목균형표 (Ichimoku Kinkō Hyō, Ichimoku)
+			a, b 사이의 영역을 '구름(Cloud)'라고 함. 주가가 구름 위에 있을 때는 상승, 반대는 하락의 추세로 볼 수 있음.
+			전환선(Conversion Line), 기준선(Base Line)이 있음.
+			GC : ichimoku_conversion_base_diff, 전환선과 기준선의 차이
+			전환선이 기준선을 상향 돌파 : 상승 추세 전환, 하향 돌파 : 하락 추세 전환
+				GC : ichimoku_conversion_base_indicator, 상승 추세 전환 시 1, 하향 추세 전환시 -1, 그 외엔 0
+			주가가 구름 위에 존재 : 상승 추세장, 아래에 존재 : 하락 추세장, 안에 존재 : 횡보장
+				GC : ichimoku_price_position, 구름 위는 1, 구름 아래는 -1, 구름 안은 0
+		KST Oscillator (KST Signal)
+			주가의 속도 변화를 측정하여 추세와 패턴을 분석. 단기, 중기, 장기적 추세를 모두 반영
+			KST 값이 양수 : 상승 추세, 음수 : 하락 추세
+			GC : kst_diff(제공됨). KST와 신호선의 차이
+			KST 값이 0을 상향 돌파 : 상승 추세의 시작, 하향 돌파 : 하락 추세의 시작
+				GC : kst_indicator1, KST 값이 0위로 올라서면 1, 내려가면 -1, 그 외엔 0.
+			KST가 신호선을 상향 돌파 : 상승 추세의 시작, 하향 돌파 : 하락 추세의 시작 
+				GC : kst_indicator2, KST가 Signal위로 올라서면 1, 내려가면 -1, 그 외엔 0.
+		MACD (Moving Average Convergence Divergence)
+			12일, 26일 이동평균의 차이. 
+			신호선은 MACD의 이동평균.
+			GC : macd_diff(제공됨). MACD와 MACD Signal의 차이
+			MACD가 0을 상향 돌파 : 상승 추세의 시작, 하향 돌파 : 하락 추세의 시작
+				GC : macd_indicator1, 상승 추세 시작시 1, 하락 추세 시작시 -1, 그 외엔 0
+			MACD가 신호선을 상향 돌파 : 상승 추세의 시작, 하향 돌파 : 하락 추세의 시작
+				GC : macd_indicator2, 상승 추세 시작시 1, 하락 추세 시작시 -1, 그 외엔 0
+		MI (Mass Index)
+			주가의 최고/최저가의 차이를 기반으로 주식의 변동성을 측정. 변동성이 증가할 때 상승할 가능성이 높다는 신호를 제공.
+			MI가 상승 : 변동성 증가, 감소 : 변동성 감소
+			27 이상으로 상승한 후 하락하는 경우 추세 반전 신호로 간주
+		Parabolic SAR (Parabolic Stop and Reverse)
+			주가의 추세가 언제 전환될 지 예측할 수 있음.
+			주가가 지표 위에 있을 때에는 상승, 반대는 하락 추세.
+			지속적인 상승이나 하락에서 그 끝을 예상할 수 있지만, 횡보 시장에선 잘못된 정보가 될 수 있음.
+			GC : psar_up_indicator(제공됨), psar_down_indicator(제공됨), 주가와 psar의 교차점을 표현 
+			GC : psar_close_psar_diff, 주가와 SAR의 차이
+			GC : psar_indicator : psar_up/down_indicator를 하나로 묶음. up이 1이면 1, down이 1이면 -1, 그 외엔 0
+		STC (Schaff Trend Cycle)
+			주가의 추세와 주기를 분석하는데 사용. 추세 전환 시점을 더 빨리 파악할 수 있도록 설계됨.
+			주가에 따라 진동하는데, 진동의 상승 스타트 지점에서 매수, 하강 스타트 지점에서 매도로 생각하면 될 듯.
+			STC가 75 이상 : 과매수, 25 이하 : 과매도
+			STC가 25를 상향 돌파 : 상승 추세로 전환, 75 이하로 하향 돌파 : 하락 추세로 전환
+				GC : stc_indicator, 상승 추세로 전환시 1, 하락 추세로 전환시 -1, 그 외엔 0
+		TRIX (Triple Exponential Average)
+			모멘텀을 분석, 추세 전환을 식별. 주가의 세 번 지수 이동 평균을 계산.
+			장기적인 추세를 강조, 단기적인 가격 변동을 무시.
+			TRIX가 양수 : 상승 추세, 음수 : 하락 추세
+			GC : trix_signal, TRIX 이동평균
+			GC : trix_trix_signal_diff, TRIX와 신호선의 차이
+			TRIX가 0을 상향 돌파 : 상승 추세 전환, 하향 돌파 : 매도 신호.
+				GC : trix_indicator1, 상승 추세로 전환시 1, 하락 추세로 전환시 -1, 그 외엔 0
+			TRIX가 신호선을 상향 돌파 : 상승 추세로 전환, 하향 돌파 : 하락 추세로 전환
+		VI (Vortex Indicator)
+			주가의 상승과 하락 움직임을 각각의 방향으로 나타냄. 주식의 추세 강도를 분석하는 데 유용.
+			pos, neg는 각각 상승/하락 방향의 움직임을 가르킴
+			pos가 neg보다 높음 : 상승 추세, 낮음 : 하락 추세
+			GC : vi_pos_neg_diff(제공됨), pos와 neg의 차이
+			pos가 neg를 상향 돌파 : 상승 추세로 전환, 하향 돌파 : 하락 추세로 전환
+				GC : vi_indicator, 상승 추세로 전환시 1, 하락 추세로 전환시 -1, 그 외엔 0
+	기타 지표 (Others Indicator)
+		CR (Cumulative Return)
+			주어진 기간동안의 누적 수익률
+		DLR (Daily Log Return)
+			일별 로그 수익률
+		DR (Daily Return)
+			일별 수익률
+	임의 생성 지표 (Costomized Analysis)
+		CMO (Chande Momentum Oscillator)
+			주가의 급등과 급락을 측정하여 상승/하락 기조를 예측하는 데 도움을 줌.
+			값이 50 이상 : 과매수, -50이하 : 과매도
+			CMO가 0선을 상향 돌파 : 상승 추세로 전환, 하향 돌파 : 하락 추세로 전환
+				GC : cmo_indicator : 상승 추세로 전환시 1, 하락 추세로 전환시 -1, 그 외엔 0
+			CMO가 신호선을 상향 돌파 : 상승 추세로 전환, 하향 돌파 : 하락 추세로 전환
+				GC : cmo_indicator : 상승 추세로 전환시 1, 하락 추세로 전환시 -1, 그 외엔 0
+		캔들패턴 (Candle Patterns)
+			도지 (Doji) 패턴
+			해머 (Hammer)
+			역해머 (Inverted Hammer)
+			유성형 (Morning Star)
+			삼중천장 (Triple Top)
+			삼중바닥 (Triple Bottom)
+			붉은색 마루보즈 (Red Marubozu)
+			녹색 마루보즈 (Green Marubozu)
+			흑삼병 (Three Black Crows)
+			적삼병 (Three White Soldiers)
+		기타 지표 (Other Indicator)
+			Pivot Points
+				지지선, 저항선을 계산할 수 있는 지표.
+	보류
+		Fibonacci Retracement
+		McClellan Oscillator
+		Put/Call Ratio
+		P/E Ratio (Price-to-Earnings Ratio)
+		P/B Ratio (Price-to-Book Ratio)
+
+
+※ 참고 사항
+	대부분의 지표는 Technical Analysis 라이브러리를 통해 구현
+	캔들패턴은 10개의 패턴을 사용 (Copilot, 질의 7)
+	AroonIndicator는 공식 문서에서는 close값을 받는데, 실제로는 high, low를 받음
+	기타 지표 3가지는 그냥 주어진 기간에 따른 누적 수익률이라 지표에서 제외
+	McClellan Oscillator는 살펴보니 기간이 길면 의미가 없을 것 같은 지표라서 제외 (Copilot, 질의 7)
+	Fibonacci Retracement는 좀 더 이해가 필요할 것같은 지표라서 제외 (Copilot, 질의 8)
+
+※ 제한 사항
+	Put/Call Ratio는는 Alpha Vantage의 API를 사용해야함.
+	P/E Ratio (Price-to-Earnings Ratio), P/B Ratio (Price-to-Book Ratio)는 yfinance의 Ticker 메서드를 통해 재무 데이터를 얻어야 계산할 수 있음
+	Parabolic SAR (Parabolic Stop and Reverse)의 up, down은 전환되면 반대의 값은 결측값이 되므로 결측값 처리시 유의
